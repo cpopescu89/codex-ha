@@ -11,9 +11,9 @@ show_banner() {
 show_menu() {
     echo "Choose your session type:"
     echo ""
-    echo "  1) Start Codex (default)"
+    echo "  1) Start Codex (OAuth sign-in if prompted)"
     echo "  2) Custom Codex command"
-    echo "  3) Authentication helper"
+    echo "  3) Authentication helper (OAuth/API key)"
     echo "  4) Drop to bash shell"
     echo "  5) Exit"
     echo ""

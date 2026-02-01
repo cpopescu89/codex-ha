@@ -63,10 +63,20 @@ check_node_installation() {
 check_codex_cli() {
     bashio::log.info "=== Codex CLI Check ==="
 
-    if command -v codex >/dev/null 2>&1; then
-        bashio::log.info "Codex CLI found at: $(which codex)"
+    local codex_command="codex"
+    if bashio::config.has_value 'codex_command'; then
+        local configured
+        configured=$(bashio::config 'codex_command')
+        if [ -n "$configured" ] && [ "$configured" != "null" ]; then
+            codex_command="$configured"
+        fi
+    fi
+    local codex_bin="${codex_command%% *}"
 
-        if [ -x "$(which codex)" ]; then
+    if command -v "$codex_bin" >/dev/null 2>&1; then
+        bashio::log.info "Codex CLI found at: $(which "$codex_bin")"
+
+        if [ -x "$(which "$codex_bin")" ]; then
             bashio::log.info "Codex CLI is executable"
         else
             bashio::log.error "Codex CLI is not executable"

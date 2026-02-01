@@ -32,6 +32,7 @@ init_environment() {
 
 load_openai_credentials() {
     local api_key_file="/data/openai-api-key"
+    local config_key_file="/config/openai-api-key.txt"
 
     if bashio::config.has_value 'openai_api_key'; then
         local api_key
@@ -47,6 +48,13 @@ load_openai_credentials() {
     if [ -z "${OPENAI_API_KEY:-}" ] && [ -f "$api_key_file" ]; then
         export OPENAI_API_KEY="$(cat "$api_key_file")"
         bashio::log.info "OpenAI API key loaded from /data"
+    fi
+
+    if [ -z "${OPENAI_API_KEY:-}" ] && [ -f "$config_key_file" ]; then
+        export OPENAI_API_KEY="$(cat "$config_key_file")"
+        echo -n "${OPENAI_API_KEY}" > "$api_key_file"
+        chmod 600 "$api_key_file"
+        bashio::log.info "OpenAI API key loaded from /config/openai-api-key.txt"
     fi
 
     if bashio::config.has_value 'openai_base_url'; then

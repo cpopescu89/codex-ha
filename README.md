@@ -1,6 +1,6 @@
 # Codex Terminal for Home Assistant
 
-This repository contains a custom add-on that integrates an OpenAI Codex CLI inside Home Assistant.
+This repository contains a custom add-on that integrates the OpenAI Codex CLI inside Home Assistant.
 
 ## Installation
 
@@ -9,7 +9,7 @@ To add this repository to your Home Assistant instance:
 1. Go to Settings -> Add-ons -> Add-on Store
 2. Click the three dots menu in the top right corner
 3. Select Repositories
-4. Add the URL for this GitHub repository
+4. Add the URL for this GitHub repository: `https://github.com/cpopescu89/codex-ha`
 5. Click Add
 
 ## Add-ons
@@ -20,10 +20,11 @@ A web-based terminal interface with a Codex CLI. This add-on provides a terminal
 
 Features:
 - Web terminal access through your Home Assistant UI
-- Codex CLI auto-launch (optional)
+- Codex CLI auto-launch (optional) with OAuth sign-in on first run
+- Device-code login option for headless environments
 - Direct access to your Home Assistant config directory
 - Optional persistent packages (apk and pip)
-- Optional OpenAI API key configuration
+- Optional OpenAI API key configuration (if you prefer key-based auth)
 
 Documentation: codex-terminal/DOCS.md
 

@@ -7,11 +7,29 @@ show_auth_menu() {
     echo "=============================================="
     echo ""
     echo "Options:"
-    echo "  1) Manual input (type or paste the API key)"
-    echo "  2) Read key from file (/config/openai-api-key.txt)"
-    echo "  3) Retry standard session"
-    echo "  4) Exit"
+    echo "  1) Start OAuth sign-in (codex --login)"
+    echo "  2) Device code login (codex login --device-auth)"
+    echo "  3) Manual API key input"
+    echo "  4) Read API key from file (/config/openai-api-key.txt)"
+    echo "  5) Retry standard session"
+    echo "  6) Exit"
     echo ""
+}
+
+start_oauth_login() {
+    echo ""
+    echo "Starting OAuth sign-in..."
+    echo "Follow the login link in the terminal to complete OAuth sign-in."
+    sleep 1
+    exec ${CODEX_COMMAND:-codex} --login
+}
+
+start_device_code_login() {
+    echo ""
+    echo "Starting device code login..."
+    echo "Follow the login link and enter the code to complete sign-in."
+    sleep 1
+    exec ${CODEX_COMMAND:-codex} login --device-auth
 }
 
 manual_auth_input() {
@@ -71,11 +89,17 @@ retry_standard_auth() {
 main() {
     while true; do
         show_auth_menu
-        echo -n "Enter your choice [1-4]: "
+        echo -n "Enter your choice [1-6]: "
         read -r choice
 
         case "$choice" in
             1)
+                start_oauth_login
+                ;;
+            2)
+                start_device_code_login
+                ;;
+            3)
                 manual_auth_input
                 if [ $? -eq 0 ]; then
                     exit 0
@@ -84,7 +108,7 @@ main() {
                 echo "Press Enter to continue..."
                 read -r
                 ;;
-            2)
+            4)
                 read_key_from_file
                 if [ $? -eq 0 ]; then
                     exit 0
@@ -93,10 +117,10 @@ main() {
                 echo "Press Enter to continue..."
                 read -r
                 ;;
-            3)
+            5)
                 retry_standard_auth
                 ;;
-            4)
+            6)
                 echo "Exiting"
                 exit 0
                 ;;

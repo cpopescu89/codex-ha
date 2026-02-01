@@ -26,7 +26,7 @@ ports_description:
 options:
   auto_launch_codex: true
   codex_command: "codex"
-  codex_install_command: "npm install -g @openai/codex"
+  codex_install_command: "npm i -g @openai/codex"
   openai_api_key: ""
   openai_base_url: ""
   openai_organization: ""
