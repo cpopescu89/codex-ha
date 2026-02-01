@@ -1,0 +1,58 @@
+---
+name: "Codex Terminal"
+description: "Terminal interface for an OpenAI Codex CLI with persistent auth and packages"
+version: "0.1.0"
+slug: "codex_terminal"
+init: false
+
+arch:
+  - aarch64
+  - amd64
+  - armv7
+
+url: "https://platform.openai.com"
+
+ingress: true
+ingress_port: 7681
+panel_icon: mdi:code-braces
+panel_title: "Codex Terminal"
+panel_admin: true
+
+ports:
+  7681/tcp: 7681
+ports_description:
+  7681/tcp: "Web terminal (not required for ingress)"
+
+options:
+  auto_launch_codex: true
+  codex_command: "codex"
+  codex_install_command: "npm install -g @openai/codex"
+  openai_api_key: ""
+  openai_base_url: ""
+  openai_organization: ""
+  persistent_apk_packages: []
+  persistent_pip_packages: []
+
+schema:
+  auto_launch_codex: bool?
+  codex_command: str?
+  codex_install_command: str?
+  openai_api_key: password?
+  openai_base_url: str?
+  openai_organization: str?
+  persistent_apk_packages:
+    - str
+  persistent_pip_packages:
+    - str
+
+map:
+  - config:rw
+
+hassio_api: true
+hassio_role: manager
+homeassistant_api: true
+auth_api: true
+
+startup: services
+
+webui: http://[HOST]:[PORT:7681]/
